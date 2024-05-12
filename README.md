@@ -45,8 +45,8 @@ git clone https://github.com/alazaradane/blogify.git
 
 ## Install dependencies:
 
-cd blogify
-npm install
+`cd blogify`
+`npm install`
 
 ## Start the development server:
 
