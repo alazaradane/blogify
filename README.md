@@ -1,5 +1,9 @@
 <p align="center">
-  <img src="https://img.shields.io/github/license/yourusername/blogify" alt="License">
+  <img src="https://images.unsplash.com/photo-1508394522741-82ac9c15ba69?q=80&w=2068&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Blogify Logo" width=100%>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/github/license/alazaradane/blogify" alt="License">
   <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome">
 </p>
 
