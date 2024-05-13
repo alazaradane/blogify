@@ -1,13 +1,14 @@
 import React from 'react'
 import { Delete, Edit } from '../assets/images'
 import { Link } from 'react-router-dom'
+import Menu from '../components/Menu'
 
 const Single = () => {
   const imgPost = 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
   const imgUser = 'https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YXZhdGFyfGVufDB8fDB8fHww'
   return (
-    <section className=' flex items-center justify-around mx-[5rem]'>
-      <div className=' flex flex-col  my-4'>
+    <section className=' ml-[6rem] flex items-start '>
+      <div className=' flex flex-col w-2/3 ml-[3rem]  my-4'>
         <div className=' my-4'>
           <img src={imgPost} className=' w-[40rem] h-[25rem]'/>
         </div>
@@ -74,7 +75,9 @@ const Single = () => {
           </div>
         </div>
       </div>
-      <div>Menu</div>
+      <div className=' w-1/3 -ml-[2rem] mr-[3rem] flex my-4'>
+        <Menu/>
+      </div>
     </section>
   )
 }
