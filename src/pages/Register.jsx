@@ -1,10 +1,48 @@
 import { Link } from "react-router-dom"
 import Logo from '../assets/images/logo.png'
+import { useState } from "react"
+import axios from 'axios'
+import backendUrl from "../../api"
+import ErrorToast from "../components/ErrorToast"
+import SuccessToast from "../components/ErrorToast"
 
 const Login  = () => {
+
+  const [input, setInput] = useState({
+    username:"",
+    email:"",
+    password:""
+  })
+  const [error, setError] = useState(null)
+
+  const handleInputChange = (e)=>{
+    setInput(prev=>({...prev, [e.target.name]:e.target.value}))
+  }
+
+  //console.log(input)
+  const handleSubmit = async (e)=>{
+    e.preventDefault()
+    try {
+      const res = await axios.post(`${backendUrl}/auth/register`, input)
+      console.log(res)
+    } catch (error) {
+      const errorResponse = error.response.data
+      setError(errorResponse)
+    }
+  }
+
+  const [showToast, setShowToast] = useState(false);
+
+  const handleCloseToast = () => {
+    setShowToast(!showToast);
+  };
+
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+        {error && <ErrorToast message={error} onClose={handleCloseToast}/>}
+        {!error && <SuccessToast message={"User created successfully"} onClose={handleCloseToast}/>} 
+
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             className="mx-auto w-[7rem]"
@@ -17,7 +55,7 @@ const Login  = () => {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <form className="space-y-6" action="#" method="POST" >
             <div>
               <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
                 Username
@@ -30,6 +68,7 @@ const Login  = () => {
                   autoComplete="username"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  onChange={handleInputChange}
                 />
               </div>
             </div>
@@ -45,6 +84,7 @@ const Login  = () => {
                   autoComplete="email"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  onChange={handleInputChange}
                 />
               </div>
             </div>
@@ -68,6 +108,7 @@ const Login  = () => {
                   autoComplete="current-password"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  onChange={handleInputChange}
                 />
               </div>
             </div>
@@ -76,6 +117,7 @@ const Login  = () => {
               <button
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                onClick={handleSubmit}
               >
                 Sign up
               </button>
