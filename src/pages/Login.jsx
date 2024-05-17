@@ -2,11 +2,14 @@ import { Link } from "react-router-dom";
 import Logo from '../assets/images/logo.png';
 import { useNavigate } from "react-router-dom";
 //import ErrorToast from "../components/ErrorToast";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from 'axios';
 import backendUrl from "../../api";
 import ErrorToast from "../components/ErrorToast";
 import SuccessToast from "../components/SuccessToast";
+import { AuthContext} from '/src/context/authContext';
+
+
 
 const Login = () => {
   const [input, setInput] = useState({
@@ -16,6 +19,9 @@ const Login = () => {
   const [error, setError] = useState(null);
   const [result, setResult] = useState(null);
   const navigate = useNavigate();
+  const {login} = useContext(AuthContext)
+
+  
 
   const handleInputChange = (e) => {
     setInput(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -30,10 +36,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${backendUrl}/auth/login`, input); // Change the URL to /auth/login for login
+      await login(input);
+      navigate('/');
       setShowToast(true); // Show the success toast
       setResult(res);
-      navigate('/');
     } catch (error) {
       if (error.response && error.response.data) {
         setError(error.response.data);
