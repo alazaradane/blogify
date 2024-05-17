@@ -1,9 +1,10 @@
-
+import { useEffect } from "react";
 import { Toast } from "flowbite-react";
 import { HiCheck, HiExclamation, HiX } from "react-icons/hi";
 
 
 const SuccessToast = ({message, onClose})=> {
+
     useEffect(() => {
         const timeout = setTimeout(() => {
           onClose(); 

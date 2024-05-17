@@ -1,7 +1,41 @@
 import { Link } from "react-router-dom"
 import Logo from '../assets/images/logo.png'
+import { useNavigate } from "react-router-dom"
+//import ErrorToast from "../components/ErrorToast"
 
 const Login  = () => {
+
+  const [input, setInput] = useState({
+    username:"",
+    password:""
+  })
+  const [error, setError] = useState(null)
+  const [result, setResult] = useState(null)
+  const navigate = useNavigate();
+
+  const handleInputChange = (e)=>{
+    setInput(prev=>({...prev, [e.target.name]:e.target.value}))
+  }
+
+  //console.log(input)
+  const [showToast, setShowToast] = useState(false);
+
+  const handleCloseToast = () => {
+    setShowToast(!showToast);
+  };
+
+  const handleSubmit = async (e)=>{
+    e.preventDefault()
+    try {
+      const res = await axios.post(`${backendUrl}/auth/register`, input)
+      setShowToast(showToast)
+      setResult(res)
+      navigate('/')
+    } catch (error) {
+      const errorResponse = error.response.data
+      setError(errorResponse)
+    }
+  }
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -30,6 +64,7 @@ const Login  = () => {
                   autoComplete="username"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  onChange={handleInputChange}
                 />
               </div>
             </div>
@@ -53,6 +88,7 @@ const Login  = () => {
                   autoComplete="current-password"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  onChange={handleInputChange}
                 />
               </div>
             </div>
@@ -61,6 +97,7 @@ const Login  = () => {
               <button
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                onClick={handleSubmit}
               >
                 Sign in
               </button>

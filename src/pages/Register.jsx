@@ -4,7 +4,8 @@ import { useState } from "react"
 import axios from 'axios'
 import backendUrl from "../../api"
 import ErrorToast from "../components/ErrorToast"
-import SuccessToast from "../components/ErrorToast"
+import SuccessToast from "../components/SuccessToast"
+import { useNavigate } from "react-router-dom"
 
 const Login  = () => {
 
@@ -14,34 +15,40 @@ const Login  = () => {
     password:""
   })
   const [error, setError] = useState(null)
+  const [result, setResult] = useState(null)
+  const navigate = useNavigate();
 
   const handleInputChange = (e)=>{
     setInput(prev=>({...prev, [e.target.name]:e.target.value}))
   }
 
   //console.log(input)
-  const handleSubmit = async (e)=>{
-    e.preventDefault()
-    try {
-      const res = await axios.post(`${backendUrl}/auth/register`, input)
-      console.log(res)
-    } catch (error) {
-      const errorResponse = error.response.data
-      setError(errorResponse)
-    }
-  }
-
   const [showToast, setShowToast] = useState(false);
 
   const handleCloseToast = () => {
     setShowToast(!showToast);
   };
 
+  const handleSubmit = async (e)=>{
+    e.preventDefault()
+    try {
+      const res = await axios.post(`${backendUrl}/auth/register`, input)
+      setShowToast(showToast)
+      setResult(res)
+      navigate('/login')
+    } catch (error) {
+      const errorResponse = error.response.data
+      setError(errorResponse)
+    }
+  }
+
+  
+
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         {error && <ErrorToast message={error} onClose={handleCloseToast}/>}
-        {!error && <SuccessToast message={"User created successfully"} onClose={handleCloseToast}/>} 
+        {result && <SuccessToast message={"User created successfully"} onClose={handleCloseToast}/>}
 
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
