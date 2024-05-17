@@ -2,6 +2,7 @@ import { Link } from "react-router-dom"
 import Logo from '../assets/images/logo.png'
 import { useNavigate } from "react-router-dom"
 //import ErrorToast from "../components/ErrorToast"
+import { useState } from "react"
 
 const Login  = () => {
 
@@ -106,9 +107,7 @@ const Login  = () => {
 
           <p className="mt-10 text-center text-sm text-gray-500">
             Not a member?{' '}
-            <a href="#register" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">  
-              <Link to={'/register'}>Register</Link>
-            </a>
+              <Link to={'/register'} className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Register</Link>  
           </p>
         </div>
       </div>
