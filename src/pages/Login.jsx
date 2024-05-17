@@ -1,45 +1,54 @@
-import { Link } from "react-router-dom"
-import Logo from '../assets/images/logo.png'
-import { useNavigate } from "react-router-dom"
-//import ErrorToast from "../components/ErrorToast"
-import { useState } from "react"
+import { Link } from "react-router-dom";
+import Logo from '../assets/images/logo.png';
+import { useNavigate } from "react-router-dom";
+//import ErrorToast from "../components/ErrorToast";
+import { useState } from "react";
+import axios from 'axios';
+import backendUrl from "../../api";
+import ErrorToast from "../components/ErrorToast";
+import SuccessToast from "../components/SuccessToast";
 
-const Login  = () => {
-
+const Login = () => {
   const [input, setInput] = useState({
-    username:"",
-    password:""
-  })
-  const [error, setError] = useState(null)
-  const [result, setResult] = useState(null)
+    username: "",
+    password: ""
+  });
+  const [error, setError] = useState(null);
+  const [result, setResult] = useState(null);
   const navigate = useNavigate();
 
-  const handleInputChange = (e)=>{
-    setInput(prev=>({...prev, [e.target.name]:e.target.value}))
-  }
+  const handleInputChange = (e) => {
+    setInput(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
 
-  //console.log(input)
   const [showToast, setShowToast] = useState(false);
 
   const handleCloseToast = () => {
-    setShowToast(!showToast);
+    setShowToast(false);
   };
 
-  const handleSubmit = async (e)=>{
-    e.preventDefault()
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      const res = await axios.post(`${backendUrl}/auth/register`, input)
-      setShowToast(showToast)
-      setResult(res)
-      navigate('/')
+      const res = await axios.post(`${backendUrl}/auth/login`, input); // Change the URL to /auth/login for login
+      setShowToast(true); // Show the success toast
+      setResult(res);
+      navigate('/');
     } catch (error) {
-      const errorResponse = error.response.data
-      setError(errorResponse)
+      if (error.response && error.response.data) {
+        setError(error.response.data);
+      } else {
+        setError('An unexpected error occurred');
+      }
+      setShowToast(true); // Show the error toast
     }
-  }
+  };
+
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+        {error && <ErrorToast message={error} onClose={handleCloseToast} />}
+        {result && <SuccessToast message={"User created successfully"} onClose={handleCloseToast} />}
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             className="mx-auto  w-[7rem]"
@@ -107,12 +116,12 @@ const Login  = () => {
 
           <p className="mt-10 text-center text-sm text-gray-500">
             Not a member?{' '}
-              <Link to={'/register'} className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Register</Link>  
+            <Link to={'/register'} className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Register</Link>
           </p>
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
