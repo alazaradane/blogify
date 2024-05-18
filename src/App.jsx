@@ -10,6 +10,7 @@ import Write from './pages/Write';
 import Single from './pages/Single'
 import PageNotFound from './pages/PageNotFound'
 
+
 const Layout = () =>{
   return (
     <>
@@ -36,10 +37,10 @@ const router = createBrowserRouter([
       {
         path:'/post/:id',
         element: <Single/>,
-        errorElement: <PageNotFound/>
+        // errorElement: <PageNotFound/>
       }
     ],
-    errorElement: <PageNotFound/>
+    // errorElement: <PageNotFound/>
     
   },
   {

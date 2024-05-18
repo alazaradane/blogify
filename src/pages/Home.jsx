@@ -1,10 +1,27 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { posts } from '../constants'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import backendUrl from '../../api'
+
 
 const Home = () => {
 
-  
+  const [posts, setPosts]= useState([])
+  const cat = useLocation().search;
+
+  useEffect(()=>{
+    const fetchData = async ()=>{
+      try {
+        const res = await axios.get(`${backendUrl}/posts${cat}`);
+        setPosts(res.data)
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  },[cat])
+
+
   return (
     <div className=' container'>
       <div>
