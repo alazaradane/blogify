@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Logo from '../assets/images/logo.png'
 import { Link } from 'react-router-dom'
+import { AuthContext } from '../context/authContext'
 
 const Navbar = () => {
+
+    const {currentUser, logout} = useContext(AuthContext)
   return (
     <>
         <nav class="bg-white    px-2 sm:px-4 py-2.5 ">
@@ -88,8 +91,9 @@ const Navbar = () => {
                     <Link to={'/?cat=food'}>Food</Link>
                 </a>
                 </li>
-                <li><span className='block py-2 pr-4 pl-3  bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 '>John</span></li>
-                <li><span className='block py-2 pr-4 pl-3  bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 hover:text-red-400 cursor-pointer '>Logout</span></li>
+                <li><span className='block py-2 pr-4 pl-3  bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 '>{currentUser?.username}</span></li>
+                <li>{currentUser ? <span className='block py-2 pr-4 pl-3  bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 hover:text-red-400 cursor-pointer ' onClick={logout}>Logout</span>: <Link className='block py-2 pr-4 pl-3  bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 cursor-pointer' to={'/login'}>Login</Link>}</li>
+
                 <li>
                 <a
                     href="#"
