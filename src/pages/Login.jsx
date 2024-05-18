@@ -21,7 +21,7 @@ const Login = () => {
   const navigate = useNavigate();
   const {login} = useContext(AuthContext)
 
-  
+  axios.defaults.withCredentials = true;
 
   const handleInputChange = (e) => {
     setInput(prev => ({ ...prev, [e.target.name]: e.target.value }));

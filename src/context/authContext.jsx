@@ -2,13 +2,17 @@ import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import backendUrl from "../../api/index";
 
+
 export const AuthContext = createContext();
+
 
 export const AuthContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem("user")) || null);
 
   const login = async(input) => {
-    const res = await axios.post(`${backendUrl}/auth/login`, input,);
+    const res = await axios.post(`${backendUrl}/auth/login`, input,{
+      withCredentials: true,  
+    });
     setCurrentUser(res.data);
   };
 
@@ -19,6 +23,7 @@ export const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(currentUser));
+    //localStorage.removeItem('accessToken')
   }, [currentUser]);
 
   return <AuthContext.Provider value={{ currentUser, login, logout }}>{children}</AuthContext.Provider>;
