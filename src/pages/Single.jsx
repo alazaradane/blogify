@@ -63,7 +63,7 @@ const Single = () => {
             <p>Posted {moment(post.date).fromNow()}</p>
           </div>
           { currentUser.username === post.username && <div className=' flex gap-2'>
-           <Link to={`/write?edit=2`}><img src={Edit} className=' cursor-pointer w-[1.5rem] h-[1.5rem] rounded-full'/></Link>
+           <Link to={`/write?edit=2`} state={post}><img src={Edit} className=' cursor-pointer w-[1.5rem] h-[1.5rem] rounded-full'/></Link>
             <Link><img src={Delete} className=' cursor-pointer w-[1.5rem] h-[1.5rem] rounded-full' onClick={handleDelete}/></Link>
           </div>}
         </div>

@@ -28,7 +28,7 @@ const Home = () => {
         {posts.map((post)=>(
           <div key={post.id} className=' flex items-start justify-evenly flex-row odd:flex-row-reverse m-5 p-5'>
             <div>
-              <img src={post.img} alt="" className=' w-[20rem]' />
+              <img src={`../upload/${post.img}`} alt="" className=' w-[20rem]' />
             </div>
             <div className=' w-[32rem] mt-[2rem] '>
               <Link to={`/post/${post.id}`}>
