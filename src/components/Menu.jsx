@@ -1,7 +1,23 @@
 import React from 'react'
-import { posts } from '../constants'
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import backendUrl from '../../api';
 
-const Menu = () => {
+const Menu = ({cat}) => {
+
+  const [posts, setPosts]= useState([])
+
+  useEffect(()=>{
+    const fetchData = async ()=>{
+      try {
+        const res = await axios.get(`${backendUrl}/posts/?cat=${cat}`);
+        setPosts(res.data)
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  },[cat])
   return (
     <section className=' flex flex-col mt-[1rem]'>      
             <p className=' flex text-xl font-bold my-3'>Other post you may like</p>

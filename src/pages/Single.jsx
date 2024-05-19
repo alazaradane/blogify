@@ -26,7 +26,7 @@ const Single = () => {
     const fetchData = async ()=>{
       try {
         const res = await axios.get(`${backendUrl}/posts/${postId}`, {
-          withCredentials: true, // Ensure cookies are sent
+          withCredentials: true, 
         });
         setPost(res.data)
       } catch (error) {
@@ -75,7 +75,7 @@ const Single = () => {
         </div>
       </div>
       <div className=' w-1/3 -ml-[2rem] mr-[3rem] flex my-4'>
-        <Menu/>
+        <Menu cat={post.cat}/>
       </div>
     </section>
   )
