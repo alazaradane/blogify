@@ -4,10 +4,12 @@ import 'react-quill/dist/quill.snow.css';
 import Button from '../components/Button';
 import axios from 'axios';
 import backendUrl from '../../api';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import moment from 'moment';
+
 const Write = () => {
 
+  const navigate = useNavigate();
   const state = useLocation().state
 
   const [value, setValue] = useState(state?.desc||'');
@@ -38,6 +40,7 @@ const Write = () => {
         img:file ? imgUrl : "",
         date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss")
       })
+      navigate('/');
       
     } catch (error) {
       console.log(error);

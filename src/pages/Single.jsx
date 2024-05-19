@@ -48,11 +48,16 @@ const Single = () => {
     }
   }
   
+  const getText = (html)=>{
+    const doc = new DOMParser().parseFromString(html, 'text/html')
+    return doc.body.textContent
+  }
+
   return (
     <section className=' ml-[6rem] flex items-start '>
       <div className=' flex flex-col w-2/3 ml-[3rem]  my-4'>
         <div className=' my-4'>
-          <img src={post?.img} className=' w-[40rem] h-[25rem]'/>
+          <img src={`../upload/${post?.img}`} className=' w-[40rem] h-[25rem]'/>
         </div>
         <div className=' flex my-[2rem] gap-3'>
           {post.userImg && <div className=' flex'>
@@ -70,7 +75,7 @@ const Single = () => {
         <div className=' flex flex-col w-2/3 '>
           <p className=' text-4xl font-bold my-4'>{post.title}</p>
           <div className=' text-start'>  
-              {post.desc}
+              {getText(post.desc)}
           </div>
         </div>
       </div>

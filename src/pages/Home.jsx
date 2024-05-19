@@ -21,7 +21,10 @@ const Home = () => {
     fetchData();
   },[cat])
 
-
+  const getText = (html)=>{
+    const doc = new DOMParser().parseFromString(html, 'text/html')
+    return doc.body.textContent
+  }
   return (
     <div className=' container'>
       <div>
@@ -34,7 +37,7 @@ const Home = () => {
               <Link to={`/post/${post.id}`}>
                 <p className=' text-4xl font-bold hover:text-indigo-600 mb-3'>{post.title}</p>
               </Link>
-              <p className=' my-[2rem] text-slate-700 text-lg'>{post.desc}</p>
+              <p className=' my-[2rem] text-slate-700 text-lg'>{getText(post.desc)}</p>
               <button className=' middle none center rounded-md bg-indigo-700 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none '>Read More</button>
             </div>
           </div>
